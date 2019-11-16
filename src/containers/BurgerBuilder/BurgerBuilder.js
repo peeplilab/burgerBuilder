@@ -22,8 +22,9 @@ class BurgerBuilder extends React.Component {
       meat: 0
     },
     totalPrice: 4,
-    purchaseable: false
+    purchasable: false
   }
+
 
   addIngredientHandler = (type) => {
 
@@ -37,6 +38,20 @@ class BurgerBuilder extends React.Component {
     const priceAddition = INGREDIENT_PRICES[type];
     const newPrice = oldPrice + priceAddition
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients })
+    this.updatePurchaseState(updatedIngredients)
+  }
+
+  //check if ingredients is greater than zero
+  updatePurchaseState = (ingredients) => {
+      //turn obj into arr of values
+    //sm is array of values - common pattern for key value mapping
+    const sum = Object.keys(ingredients).map(igKey => {
+      return ingredients[igKey]
+    })
+      .reduce((sum, el) => {
+        return sum + el
+      }, 0)
+    this.setState({ purchasable: sum > 0 })
   }
 
   removeIngredientHandler = (type) => {
@@ -59,21 +74,10 @@ class BurgerBuilder extends React.Component {
       ingredients: updatedIngredients,
       totalPrice: newPrice
     })
+    this.updatePurchaseState(updatedIngredients)
   }
 
-  updatePurchaseState = () => {
-    const ingredients = {
-      ...this.state.ingredients
-    }
 
-    const sum = Object.keys(ingredients).map(igKey => {
-      return ingredients[igKey]
-    })
-      .reduce((sum, el) => {
-        return sum + el
-      }, 0)
-    this.setState({ purchaseable: sum > 0 })
-  }
 
   render() {
     const disableInfo = {
@@ -89,7 +93,9 @@ class BurgerBuilder extends React.Component {
           price={this.state.totalPrice}
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
-          disabled={disableInfo} />
+          disabled={disableInfo}
+          purchasable={this.state.purchasable}
+        />
       </Aux>
     )
 
