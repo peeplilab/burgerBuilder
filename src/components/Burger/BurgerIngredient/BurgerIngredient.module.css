@@ -12,7 +12,7 @@
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 50% 50% 0 0;
-  box-shadow: inset -15px 0 #c15711;
+  box-shadow: inset -15px 0 #e4742a;
   margin: 2% auto;
   position: relative;
 }
@@ -21,7 +21,7 @@
   width: 10%;
   height: 15%;
   position: absolute;
-  background-color: white;
+  background-color: rgb(150, 37, 37);
   left: 30%;
   top: 50%;
   border-radius: 40%;
